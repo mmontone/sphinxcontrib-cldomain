@@ -1,6 +1,8 @@
 Release 0.14 (unreleased)
 -------------------------
-* fixed warning about 4 items index on Sphinx >= 1.4.
+* fixed a warning about 4 items index on Sphinx >= 1.4.
+* fixed a warning that default value type for cl_systems is dictionary,
+  but list is expected.
 
 Release 0.13 06-09-2015
 -----------------------
