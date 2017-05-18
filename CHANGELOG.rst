@@ -1,8 +1,11 @@
 Release 0.14 (unreleased)
 -------------------------
+* lisp docstring collector was separated into a `cldomain utility`_
 * fixed a warning about 4 items index on Sphinx >= 1.4.
 * fixed a warning that default value type for cl_systems is dictionary,
   but list is expected.
+
+.. _cldomain utility: http://40ants.com/cldomain/
 
 Release 0.13 06-09-2015
 -----------------------

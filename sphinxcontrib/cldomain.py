@@ -875,21 +875,21 @@ def index_packages(systems, system_paths, packages, quicklisp, lisps, cl_debug):
     strings for all public symbols.
 
     """
-    cl_launch_exe = [which("cl-launch")[0]]
-    cl_launch_command = cl_launch_args(lisps)
-    cldomain_args = ["--"]
+    command = [which("cldomain")[0]]
+    args = []
+
     for package in packages:
-        cldomain_args.extend(["--package", package])
+        args.extend(["--package", package])
     for system in systems:
-        cldomain_args.extend(["--system", system])
+        args.extend(["--system", system])
     for system_path in system_paths:
-        cldomain_args.extend(["--path", system_path])
+        args.extend(["--path", system_path])
+
     env = os.environ.copy()
     env.update({"CLDOMAIN": path.abspath(path.dirname(__file__)) + "/",
                 "QUICKLISP": quicklisp})
-    raw_output = subprocess.check_output(cl_launch_exe
-                                         + cl_launch_command
-                                         + cldomain_args,
+    raw_output = subprocess.check_output(command
+                                         + args,
                                          env=env)
     output = "\n".join([line for line in raw_output.split("\n")
                         if not line.startswith(";")])
