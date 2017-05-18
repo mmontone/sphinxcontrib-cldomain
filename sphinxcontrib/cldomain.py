@@ -36,12 +36,12 @@ from docutils import nodes
 from docutils.statemachine import string2lines, StringList
 import pprint
 
-from sphinx import addnodes
+from sphinx import addnodes, version_info
 from sphinx.util.console import red
 from sphinx.locale import l_, _
 from sphinx.roles import XRefRole
 from sphinx.domains import Domain, ObjType
-from sphinx.directives import ObjectDescription
+from sphinx.directives import ObjectDescription as SphinxObjectDescription
 from sphinx.util.nodes import make_refnode
 from sphinx.util.compat import Directive
 from sphinx.util.docfields import Field, GroupedField
@@ -401,6 +401,20 @@ class SEXP(object):
             param = token
         signode.append(param)
 
+class ObjectDescription(SphinxObjectDescription):
+    def add_index_entry(self, text, indexname):
+        """Adds entry to the index.
+        """
+        if text:
+            index_entry = ['single', text, indexname, '']
+
+            # Sphinx >= 1.4 issue warning if index contains only 4 elements
+            # See https://github.com/sphinx-doc/sphinx/issues/2673
+            if version_info >= (1, 4):
+                index_entry.append(None)
+
+            self.indexnode['entries'].append(index_entry)
+
 
 class CLsExp(ObjectDescription):
 
@@ -511,8 +525,7 @@ class CLsExp(ObjectDescription):
                 inv[name] = [(self.env.docname, self.objtype)]
 
         indextext = self.get_index_text(name, type)
-        if indextext:
-            self.indexnode['entries'].append(('single', indextext, indexname, ''))
+        self.add_index_entry(indextext, indexname)
 
     def before_content(self):
         if "nodoc" in self.options:
@@ -647,8 +660,7 @@ class CLMethod(CLGeneric):
                 inv[name] = {sig: (self.env.docname, self.objtype)}
 
         indextext = self.get_index_text(name, type)
-        if indextext:
-            self.indexnode['entries'].append(('single', indextext, indexname, ''))
+        self.add_index_entry(indextext, indexname)
 
     def cl_doc_string(self):
         """Resolve a symbols doc string. Will raise KeyError if the symbol

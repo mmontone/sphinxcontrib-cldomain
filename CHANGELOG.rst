@@ -1,3 +1,7 @@
+Release 0.14 (unreleased)
+-------------------------
+* fixed warning about 4 items index on Sphinx >= 1.4.
+
 Release 0.13 06-09-2015
 -----------------------
 * updated com.dvlsoft.clon to net.didierverna.clon.
