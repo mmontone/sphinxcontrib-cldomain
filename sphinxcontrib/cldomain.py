@@ -898,7 +898,7 @@ def index_packages(systems, system_paths, packages, quicklisp, lisps, cl_debug):
             pprint.pprint(lisp_data)
     except:
         if os.environ.get('CI'):
-            print('A error occurred with the json output from cldomain.\nHere is the full output:\n\n', file=sys.stderr)w
+            print('A error occurred with the json output from cldomain.\nHere is the full output:\n\n', file=sys.stderr)
             print(raw_output.encode('utf-8'), file=sys.stderr)
             print('\nEnd of cldomain output', file=sys.stderr)
         else:
