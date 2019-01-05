@@ -28,9 +28,7 @@ desc_file = path.join(path.dirname(__file__), "README.rst")
 changelog_file = path.join(path.dirname(__file__), "CHANGELOG.rst")
 description = open(desc_file).read() + changelog_header + open(changelog_file).read()
 
-__version__ = open(path.join(path.dirname(__file__),
-                             "sphinxcontrib",
-                             "version.lisp-expr")).read().strip().strip('"')
+__version__ = '0.14'
 
 requires = ['Sphinx>=0.6']
 

@@ -46,10 +46,6 @@ from sphinx.util.nodes import make_refnode
 from sphinx.util.compat import Directive
 from sphinx.util.docfields import Field, GroupedField
 
-__version__ = open(path.join(path.dirname(__file__),
-                   "version.lisp-expr")).read().strip('"')
-
-
 ALL_TYPES = ["macro", "function", "genericFunction",
              "setf", "variable", "type"]
 upper_symbols = re.compile("([^a-z\s\"`]*[A-Z]{2,}[^a-z\s\"`:]*)($|\s)")
