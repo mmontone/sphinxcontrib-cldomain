@@ -43,8 +43,9 @@ from sphinx.roles import XRefRole
 from sphinx.domains import Domain, ObjType
 from sphinx.directives import ObjectDescription as SphinxObjectDescription
 from sphinx.util.nodes import make_refnode
-from sphinx.util.compat import Directive
+from docutils.parsers.rst import Directive
 from sphinx.util.docfields import Field, GroupedField
+from sphinx.util.logging import getLogger
 
 ALL_TYPES = ["macro", "function", "genericFunction",
              "setf", "variable", "type"]
@@ -529,15 +530,15 @@ class CLsExp(ObjectDescription):
         package = self.env.temp_data.get('cl:package')
         name = self.names[0][1]
         if not package:
-            self.state_machine.reporter.warning("No package specified for symbol %s." %
-                                                name)
+            getLogger('cldomain').warning("No package specified for symbol %s." %
+                                          name)
             return
         try:
             string = self.cl_doc_string()
         except KeyError:
             string = ""
-            self.state_machine.reporter.warning("Can't find symbol %s:%s" %
-                                                (package, name))
+            getLogger('cldomain').warning("Can't find symbol %s:%s" %
+                                          (package, name))
         if not string:
             return
         lines = string2lines(string) + ['']
@@ -672,8 +673,8 @@ class CLMethod(CLGeneric):
         key = tuple([parse_specializer_symbol(sym, package)
                      for sym in spec])
         if key not in method_doc:
-            self.state_machine.reporter.warning("Can't find method %s:%s specializer %s, available specializers are %s" %
-                                           (package, name, key, method_doc.keys()))
+            getLogger('cldomain').warning("Can't find method %s:%s specializer %s, available specializers are %s" %
+                                          (package, name, key, method_doc.keys()))
         doc = method_doc.get(key, "")
         if doc:
             return doc
