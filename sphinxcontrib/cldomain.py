@@ -990,8 +990,8 @@ def load_packages(app):
     systems = []
     system_paths = []
     if app.config.cl_packages:
-        app.info("DEPRECATED: The cl_packages variable has been "
-                 "replaced by cl_systems and will be removed in the future.")
+        getLogger('cldomain').info("DEPRECATED: The cl_packages variable has been "
+                                   "replaced by cl_systems and will be removed in the future.")
         for package, system_path in app.config.cl_packages.iteritems():
             packages.append(package.upper())
             systems.append(package)
@@ -1013,7 +1013,7 @@ def load_packages(app):
         app.warn("No CL packages specified.")
         return
 
-    app.info("Collecting Lisp docstrings from %s..." % ', '.join(str(x) for x in systems))
+    getLogger('cldomain').info("Collecting Lisp docstrings from %s..." % ', '.join(str(x) for x in systems))
     index_packages(systems,
                    system_paths,
                    packages,
