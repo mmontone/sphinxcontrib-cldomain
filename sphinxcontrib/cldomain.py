@@ -15,13 +15,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-"""
-    sphinxcontrib.cldomain
-    ~~~~~~~~~~~~~~~~~~~~~~
+from __future__ import print_function
 
-    The Common Lisp domain
-
-"""
 import re
 import os
 import sys
@@ -467,6 +462,7 @@ class CLsExp(ObjectDescription):
         symbol_name = sig
         if not symbol_name:
             raise Exception("Unknown symbol type for signature %s" % sig)
+        
         record_use(package, symbol_name, self.objtype)
         return objtype.strip(), symbol_name
 
@@ -901,12 +897,16 @@ def index_packages(systems, system_paths, packages, quicklisp, lisps, cl_debug):
         if cl_debug:
             pprint.pprint(lisp_data)
     except:
-        dump_path = save_cldomain_output(raw_output)
-        error = sys.stderr
-        print >>error, red('A error occurred with the json output from cldomain\'s'
-                           ' lisp inspector,  this has been dumped to %s if you '
-                           'intend on submitting a bug please include this file '
-                           'with the sphinx error log.' % dump_path)
+        if os.environ.get('CI'):
+            print('A error occurred with the json output from cldomain.\nHere is the full output:\n\n', file=sys.stderr)
+            print(raw_output.encode('utf-8'), file=sys.stderr)
+        else:
+            dump_path = save_cldomain_output(raw_output)
+            error = sys.stderr
+            print >>error, red('A error occurred with the json output from cldomain\'s'
+                               ' lisp inspector,  this has been dumped to %s if you '
+                               'intend on submitting a bug please include this file '
+                               'with the sphinx error log.' % dump_path)
 
         raise
 
