@@ -1010,7 +1010,7 @@ def load_packages(app):
                 packages.append(system['name'].upper())
 
     if not packages:
-        app.warn("No CL packages specified.")
+        getLogger('cldomain').warning("No CL packages specified.")
         return
 
     getLogger('cldomain').info("Collecting Lisp docstrings from %s..." % ', '.join(str(x) for x in systems))
@@ -1043,11 +1043,13 @@ def list_unused_symbols(app, exception):
                     if objtype == "genericFunction":
                         objtype = "generic"
                     if objtype not in USED_SYMBOLS[package][symbol]:
-                        app.warn("Unused symbol doc %s:%s type %s" %
-                                           (package, symbol, objtype))
+                        getLogger('cldomain').warning(
+                            "Unused symbol doc %s:%s type %s" %
+                            (package, symbol, objtype))
                 else:
-                    app.warn("Unused symbol doc %s:%s type %s" %
-                                           (package, symbol, objtype))
+                    getLogger('cldomain').warning(
+                        "Unused symbol doc %s:%s type %s" %
+                        (package, symbol, objtype))
 
 
 def add_node(class_name, node, visit, depart=None):
