@@ -882,8 +882,13 @@ def index_packages(systems, system_paths, packages, quicklisp, lisps, cl_debug):
         args.extend(["--path", system_path])
 
     env = os.environ.copy()
-    env.update({"CLDOMAIN": path.abspath(path.dirname(__file__)) + "/",
+    
+    cl_domain_path = path.abspath(path.dirname(__file__)) + '/'
+    env.update({"CLDOMAIN": cl_domain_path,
                 "QUICKLISP": quicklisp})
+    print('Exporting CLDOMAIN={}'.format(cl_domain_path))
+    print('Exporting QUICKLISP={}'.format(quicklisp))
+    print('Executing {0} {1}'.format(' '.join(command), ' '.join(args)))
     raw_output = subprocess.check_output(command
                                          + args,
                                          env=env)
@@ -1027,20 +1032,21 @@ def uppercase_symbols(app, docname, source):
 def list_unused_symbols(app, exception):
     if exception:
         return
+
     # TODO (RS) this initial implementation will not be able to detect
     # if each method specialisation has been used.
-    for p, sym_doc in DOC_STRINGS.items():
-        for s, docs in sym_doc.items():
+    for package, sym_doc in DOC_STRINGS.items():
+        for symbol, docs in sym_doc.items():
             for objtype in docs.keys():
-                if s in USED_SYMBOLS[p]:
+                if symbol in USED_SYMBOLS[package]:
                     if objtype == "genericFunction":
                         objtype = "generic"
-                    if objtype not in USED_SYMBOLS[p][s]:
+                    if objtype not in USED_SYMBOLS[package][symbol]:
                         app.warn("Unused symbol doc %s:%s type %s" %
-                                           (p, s, objtype))
+                                           (package, symbol, objtype))
                 else:
                     app.warn("Unused symbol doc %s:%s type %s" %
-                                           (p, s, objtype))
+                                           (package, symbol, objtype))
 
 
 def add_node(class_name, node, visit, depart=None):
