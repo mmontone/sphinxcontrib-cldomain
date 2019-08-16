@@ -28,7 +28,7 @@ desc_file = path.join(path.dirname(__file__), "README.rst")
 changelog_file = path.join(path.dirname(__file__), "CHANGELOG.rst")
 description = open(desc_file).read() + changelog_header + open(changelog_file).read()
 
-__version__ = '0.14'
+__version__ = '0.15'
 
 requires = ['Sphinx>=0.6', 'future', 'pygments-cl-repl>=0.2']
 
