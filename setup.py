@@ -30,7 +30,7 @@ description = open(desc_file).read() + changelog_header + open(changelog_file).r
 
 __version__ = '0.14'
 
-requires = ['Sphinx>=0.6']
+requires = ['Sphinx>=0.6', 'future', 'pygments-cl-repl>=0.2']
 
 setup(
     name='sphinxcontrib-cldomain',

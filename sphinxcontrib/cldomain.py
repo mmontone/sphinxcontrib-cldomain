@@ -26,7 +26,7 @@ import json
 from collections import defaultdict
 import operator
 import subprocess
-from StringIO import StringIO
+from io import StringIO
 from docutils import nodes
 from docutils.statemachine import string2lines, StringList
 import pprint
@@ -889,8 +889,9 @@ def index_packages(systems, system_paths, packages, quicklisp, lisps, cl_debug):
     raw_output = subprocess.check_output(command
                                          + args,
                                          env=env)
-    output = "\n".join([line for line in raw_output.split("\n")
-                        if not line.startswith(";")])
+    lines = raw_output.decode('utf-8').split('\n')
+    output = '\n'.join([line for line in lines
+                        if not line.startswith(';')])
 
     try:
         lisp_data = json.loads(output)
