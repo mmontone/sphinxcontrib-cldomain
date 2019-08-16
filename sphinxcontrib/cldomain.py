@@ -33,7 +33,7 @@ import pprint
 
 from sphinx import addnodes, version_info
 from sphinx.util.console import red
-from sphinx.locale import l_, _
+from sphinx.locale import _
 from sphinx.roles import XRefRole
 from sphinx.domains import Domain, ObjType
 from sphinx.directives import ObjectDescription as SphinxObjectDescription
@@ -411,10 +411,10 @@ class ObjectDescription(SphinxObjectDescription):
 class CLsExp(ObjectDescription):
 
     doc_field_types = [
-        GroupedField('parameter', label=l_('Parameters'),
+        GroupedField('parameter', label=_('Parameters'),
                      names=('param', 'parameter', 'arg', 'argument',
                             'keyword', 'kwparam')),
-        Field('returnvalue', label=l_('Returns'), has_arg=False,
+        Field('returnvalue', label=_('Returns'), has_arg=False,
               names=('returns', 'return')),
     ]
 
@@ -599,12 +599,12 @@ class CLMethod(CLGeneric):
     }
 
     doc_field_types = [
-        Field('specializer', label=l_('Specializer'), has_arg=False,
+        Field('specializer', label=_('Specializer'), has_arg=False,
               names=('specializer')),
-        GroupedField('parameter', label=l_('Parameters'),
+        GroupedField('parameter', label=_('Parameters'),
                      names=('param', 'parameter', 'arg', 'argument',
                             'keyword', 'kwparam')),
-        Field('returnvalue', label=l_('Returns'), has_arg=False,
+        Field('returnvalue', label=_('Returns'), has_arg=False,
               names=('returns', 'return')),
     ]
 
@@ -738,13 +738,13 @@ class CLDomain(Domain):
     label = 'Common Lisp'
 
     object_types = {
-        'package': ObjType(l_('package'), 'package'),
-        'function': ObjType(l_('function'), 'function'),
-        'macro': ObjType(l_('macro'), 'macro'),
-        'variable': ObjType(l_('variable'), 'variable'),
-        'type': ObjType(l_('type'), 'type'),
-        'generic': ObjType(l_('generic'), 'generic'),
-        'method': ObjType(l_('method'), 'method'),
+        'package': ObjType(_('package'), 'package'),
+        'function': ObjType(_('function'), 'function'),
+        'macro': ObjType(_('macro'), 'macro'),
+        'variable': ObjType(_('variable'), 'variable'),
+        'type': ObjType(_('type'), 'type'),
+        'generic': ObjType(_('generic'), 'generic'),
+        'method': ObjType(_('method'), 'method'),
         }
 
     directives = {
