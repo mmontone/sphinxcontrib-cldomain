@@ -797,7 +797,7 @@ class CLDomain(Domain):
                     if name == symbol:
                         return True
                 return False
-            return filter(filter_symbols, symbols.items())
+            return list(filter(filter_symbols, symbols.items()))
 
     def find_method(self, env, name, node):
         """Find a Lisp symbol for "name", perhaps using the given package
