@@ -813,9 +813,9 @@ class CLDomain(Domain):
             if specializer in methods[generic]:
                 return [methods[generic][specializer]]
             else:
-                env.warn_node('can\'t find method %s' % (name), node)
+                getLogger('cldomain').warning('can\'t find method %s' % (name))
         else:
-            env.warn_node('can\'t find generic %s' % (name), node)
+            getLogger('cldomain').warning('can\'t find generic %s' % (name))
 
     def resolve_xref(self, env, fromdocname, builder,
                      typ, target, node, contnode):
@@ -827,10 +827,10 @@ class CLDomain(Domain):
         if not matches:
             return None
         elif len(matches) > 1:
-            env.warn_node(
+            getLogger('cldomain').warning(
                 'more than one target found for cross-reference '
-                '%r: %s' % (target, ', '.join(match[0] for match in matches)),
-                node)
+                '%r: %s' % (target, ', '.join(match[0] for match in matches)))
+            
         # TODO (RS) this just chooses the first symbol, instead every
         # symbol should be presented.
 
